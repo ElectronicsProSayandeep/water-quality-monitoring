@@ -7,7 +7,6 @@ import time
 
 prodir = "C:\\Users\\Sayandeep\\Software_Development\\python\\water_ml\\water-quality-system\\app"
 
-watchtime = True
 today = date.today()
 hourprev = today.strftime("%H")
 
@@ -40,11 +39,15 @@ while 1:
     tds = 0
     temp = 0
 
+    #add new values to csv
 
-    mainscreen(ph, turb, tds, temp)
-    while watchtime:
+    #read last 24 values
+
+    #mainscreen(ph, turb, tds, temp) #display values on gui
+    while 1:
         hourcurr = today.strftime("%H")
         if hourcurr > hourprev:
+            print("updating...")
             break
         else:
             time.sleep(30)
