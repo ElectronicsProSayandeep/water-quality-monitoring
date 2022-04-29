@@ -7,6 +7,10 @@ import time
 
 prodir = "C:\\Users\\Sayandeep\\Software_Development\\python\\water_ml\\water-quality-system\\app"
 
+watchtime = True
+today = date.today()
+hourprev = today.strftime("%H")
+
 def mainscreen(ph, turb, tds, temp):
     mainscrn = Tk()
     mainscrn.grab_set()
@@ -38,4 +42,9 @@ while 1:
 
 
     mainscreen(ph, turb, tds, temp)
-    time.sleep(3600)
+    while watchtime:
+        hourcurr = today.strftime("%H")
+        if hourcurr > hourprev:
+            break
+        else:
+            time.sleep(30)

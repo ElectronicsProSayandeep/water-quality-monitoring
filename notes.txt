@@ -3,3 +3,8 @@ pH
 Turbidity
 Temperature
 TDS
+
+CSV format: 2022/April/29.csv:
+hour, ph, tds, turb, temp
+
+0, 7.2, 210, 930, 43
