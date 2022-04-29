@@ -5,7 +5,7 @@ import os
 import csv
 import time
 
-prodir = "C:/Users/Sayandeep/Software_Development/python/water_ml/app"
+prodir = "C:\\Users\\Sayandeep\\Software_Development\\python\\water_ml\\water-quality-system\\app"
 
 def mainscreen(ph, turb, tds, temp):
     mainscrn = Tk()
