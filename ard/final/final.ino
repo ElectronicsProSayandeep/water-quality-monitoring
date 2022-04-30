@@ -55,7 +55,7 @@ void loop(){
   float ph = -5.70 * volt + calibration_value;
 
   //tds ppm
-  gravityTds.setTemperature(27);  // set the temperature and execute temperature compensation
+  gravityTds.setTemperature(degc);  // set the temperature and execute temperature compensation
   gravityTds.update();  //sample and calculate
   ppm = gravityTds.getTdsValue();  // then get the value
 
