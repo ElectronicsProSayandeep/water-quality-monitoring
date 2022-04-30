@@ -30,16 +30,29 @@ while 1:
         if data:
             #print(str(data)[2:-1])
             break
-
-    #add new values to csv
-    datacsv = [str(data)[2:-1]]
-    print(datacsv)
-    with open('read24.csv', 'w', encoding='UTF8') as csvfile:
-        writecsv = csv.writer(csvfile)
-        writecsv.writerow(datacsv)
+    strcsv = str(data)[2:-1]
+    datacsv = list(map(float,strcsv.split(',')))
+    
+    #prepare csv
+    shutil.copyfile("C:\\Users\\Sayandeep\\Software_Development\\python\\water_ml\\water-quality-system\\app\\data\\blank.csv","tempread24.csv")
+    with open('read24.csv','r') as csvread:
+        with open('tempread24.csv','w',newline='\n') as csvwrite:
+            next(csvread)
+            for line in csvread:
+                csvwrite.write(line)
+            writecsv = csv.writer(csvwrite)
+            writecsv.writerow(datacsv)
+    
+    os.unlink("read24.csv")
+    os.rename("tempread24.csv","read24.csv")
 
     #read csv
+    listcsv = []
+    with open('read24.csv','r') as csvread:
+        csv_reader = csv.reader(csvread)
+        listcsv = list(csv_reader)
 
+    print(listcsv)
 
     #mainscreen(currval) #display values on gui
     while 1:
