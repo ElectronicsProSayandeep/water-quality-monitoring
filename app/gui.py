@@ -89,17 +89,53 @@ def mainscreen(csvlist):
 
 
     #plot graphs
-    def phgraph():
-        pass
+    def phgraph(x,y1,y2):
+        fig,ax1 = plt.subplots()
+        ax1.set_xlabel('Time(Hrs)')
+        ax1.set_ylabel('Parameters(unit)')
+        plot_1 = ax1.plot(x, y1)
+        ax1.tick_params(axis='y')
+        ax2 = ax1.twinx()
+        ax2.set_ylabel('Anomality')
+        plot_2 = ax2.plot(x, y2, color = 'red')
+        ax2.tick_params(axis='y')
+        plt.show()
 
-    def ppmgraph():
-        pass
+    def ppmgraph(x,y1,y2):
+        fig,ax1 = plt.subplots()
+        ax1.set_xlabel('Time(Hrs)')
+        ax1.set_ylabel('Parameters(unit)')
+        plot_1 = ax1.plot(x, y1)
+        ax1.tick_params(axis='y')
+        ax2 = ax1.twinx()
+        ax2.set_ylabel('Anomality')
+        plot_2 = ax2.plot(x, y2, color = 'red')
+        ax2.tick_params(axis='y')
+        plt.show()
 
-    def ntugraph():
-        pass
+    def ntugraph(x,y1,y2):
+        fig,ax1 = plt.subplots()
+        ax1.set_xlabel('Time(Hrs)')
+        ax1.set_ylabel('Parameters(unit)')
+        plot_1 = ax1.plot(x, y1)
+        ax1.tick_params(axis='y')
+        ax2 = ax1.twinx()
+        ax2.set_ylabel('Anomality')
+        plot_2 = ax2.plot(x, y2, color = 'red')
+        ax2.tick_params(axis='y')
+        plt.show()
 
-    def degcgraph():
-        pass
+    def degcgraph(x,y1,y2):
+        fig,ax1 = plt.subplots()
+        ax1.set_xlabel('Time(Hrs)')
+        ax1.set_ylabel('Parameters(unit)')
+        plot_1 = ax1.plot(x, y1)
+        ax1.tick_params(axis='y')
+        ax2 = ax1.twinx()
+        ax2.set_ylabel('Anomality')
+        plot_2 = ax2.plot(x, y2, color = 'red')
+        ax2.tick_params(axis='y')
+        plt.show()
 
 
     #GUI
@@ -140,7 +176,7 @@ def mainscreen(csvlist):
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: degcgraph("button_1 clicked"),
+        command=lambda: degcgraph(hourlist,degclist,anodegc),
         relief="flat"
     )
     button_1.place(
@@ -156,7 +192,7 @@ def mainscreen(csvlist):
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: ntugraph("button_2 clicked"),
+        command=lambda: ntugraph(hourlist,ntulist,anontu),
         relief="flat"
     )
     button_2.place(
@@ -198,7 +234,7 @@ def mainscreen(csvlist):
         image=button_image_3,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: ppmgraph("button_3 clicked"),
+        command=lambda: ppmgraph(hourlist,ppmlist,anoppm),
         relief="flat"
     )
     button_3.place(
@@ -214,7 +250,7 @@ def mainscreen(csvlist):
         image=button_image_4,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: phgraph("button_4 clicked"),
+        command=lambda: phgraph(hourlist,phlist,anoph),
         relief="flat"
     )
     button_4.place(
