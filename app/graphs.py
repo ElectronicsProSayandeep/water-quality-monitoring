@@ -1,7 +1,11 @@
+<<<<<<< Updated upstream
 
 import matplotlib
 import matplotlib.pyplot as plt 
 from matplotlib.pyplot import figure
+=======
+import matplotlib.pyplot as plt
+>>>>>>> Stashed changes
 
 
 listcsv = [[0,7.25,212,700,20],
