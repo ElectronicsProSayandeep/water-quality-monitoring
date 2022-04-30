@@ -4,6 +4,7 @@ from datetime import date
 import os
 import csv
 import time
+import serial
 import shutil
 
 prodir = "C:\\Users\\Sayandeep\\Software_Development\\python\\water_ml\\water-quality-system\\app"
