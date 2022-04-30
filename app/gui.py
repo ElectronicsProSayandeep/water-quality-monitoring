@@ -5,21 +5,35 @@ from PIL import ImageTk,Image
 import os
 import csv
 import time
+import numpy
 import serial
 import shutil
 import tkinter
+import matplotlib.pyplot as plt
 
 today = date.today()
 hourprev = today.strftime("%H") #use %H for hour, %M for min
 arduino = serial.Serial(port="COM6", baudrate=115200, timeout=1) #change port everytime reconnect
 
 def mainscreen(csvlist):
-    #current values
-    currdegc = csvlist[23][0]
-    currph = csvlist[23][1]
-    currppm = csvlist[23][2]
-    currntu = csvlist[23][3]
+    #initialise window
+    window = Tk()
+    window.geometry("1280x720")
+    window.configure(bg = "#3A7FF6")
 
+
+    #current values
+    currdegc = StringVar()
+    currph = StringVar()
+    currppm = StringVar()
+    currntu = StringVar()
+    currdegc = str(csvlist[23][0])
+    currph = str(csvlist[23][1])
+    currppm = str(csvlist[23][2])
+    currntu = str(int(float(csvlist[23][3])))
+
+
+    #csv lists of temp, ph, tds, ntu
     degclist = []
     for i in csvlist:
         degclist.append(float(i[0]))
@@ -36,15 +50,64 @@ def mainscreen(csvlist):
     for i in csvlist:
         ntulist.append(float(i[3]))
 
+    hourlist = [23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]
+
+
+    #predictions
+    preddegc = StringVar()
+    predph = StringVar()
+    predppm = StringVar()
+    predntu = StringVar()
+
+    moddegc = numpy.poly1d(numpy.polyfit(hourlist, degclist, 3))
+    modph = numpy.poly1d(numpy.polyfit(hourlist, phlist, 3))
+    modppm = numpy.poly1d(numpy.polyfit(hourlist, ppmlist, 3))
+    modntu = numpy.poly1d(numpy.polyfit(hourlist, ntulist, 3))
+
+    preddegc = round(moddegc(24),2)
+    predph = round(modph(24),2)
+    predppm = round(modppm(24),2)
+    predntu = int(modntu(24))
+
+
+    #anomalous value lists
+    anodegc = []
+    for i in degclist:
+        anodegc.append(round(abs(i-27),2))
+
+    anoph = []
+    for i in phlist:
+        anoph.append(round(abs(i-7.5),2))
+
+    anoppm = []
+    for i in ppmlist:
+        anoppm.append(round(abs(i-100),2))
+
+    anontu = []
+    for i in ntulist:
+        anontu.append(round(abs(i-25),2))
+
+
+    #plot graphs
+    def phgraph():
+        pass
+
+    def ppmgraph():
+        pass
+
+    def ntugraph():
+        pass
+
+    def degcgraph():
+        pass
+
+
+    #GUI
     OUTPUT_PATH = Path(__file__).parent
     ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 
     def relative_to_assets(path: str) -> Path:
         return ASSETS_PATH / Path(path)
-
-    window = Tk()
-    window.geometry("1280x720")
-    window.configure(bg = "#3A7FF6")
 
     canvas = Canvas(
         window,
@@ -77,7 +140,7 @@ def mainscreen(csvlist):
         image=button_image_1,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_1 clicked"),
+        command=lambda: degcgraph("button_1 clicked"),
         relief="flat"
     )
     button_1.place(
@@ -93,7 +156,7 @@ def mainscreen(csvlist):
         image=button_image_2,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_2 clicked"),
+        command=lambda: ntugraph("button_2 clicked"),
         relief="flat"
     )
     button_2.place(
@@ -122,11 +185,11 @@ def mainscreen(csvlist):
     )
 
     canvas.create_rectangle(
-        12.999999999999886,
-        296.0,
-        532.9999999999999,
+        13.0,
+        290.0,
+        533.0,
         416.0,
-        fill="#000000",
+        fill="#121212",
         outline="")
 
     button_image_3 = PhotoImage(
@@ -135,7 +198,7 @@ def mainscreen(csvlist):
         image=button_image_3,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_3 clicked"),
+        command=lambda: ppmgraph("button_3 clicked"),
         relief="flat"
     )
     button_3.place(
@@ -151,7 +214,7 @@ def mainscreen(csvlist):
         image=button_image_4,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_4 clicked"),
+        command=lambda: phgraph("button_4 clicked"),
         relief="flat"
     )
     button_4.place(
@@ -192,7 +255,7 @@ def mainscreen(csvlist):
         779.9999999999999,
         125.0,
         anchor="nw",
-        text="1",
+        text=currph,
         fill="#505485",
         font=("Poppins Bold", 32 * -1)
     )
@@ -201,7 +264,7 @@ def mainscreen(csvlist):
         1100.0,
         126.0,
         anchor="nw",
-        text="2",
+        text=predph,
         fill="#505485",
         font=("Poppins Bold", 32 * -1)
     )
@@ -210,7 +273,7 @@ def mainscreen(csvlist):
         1100.0,
         175.0,
         anchor="nw",
-        text="3",
+        text=predntu,
         fill="#505485",
         font=("Poppins Bold", 32 * -1)
     )
@@ -219,7 +282,7 @@ def mainscreen(csvlist):
         1100.0,
         225.0,
         anchor="nw",
-        text="4",
+        text=predppm,
         fill="#505485",
         font=("Poppins Bold", 32 * -1)
     )
@@ -228,7 +291,7 @@ def mainscreen(csvlist):
         1100.0,
         275.0,
         anchor="nw",
-        text="5",
+        text=preddegc,
         fill="#505485",
         font=("Poppins Bold", 32 * -1)
     )
@@ -237,7 +300,7 @@ def mainscreen(csvlist):
         779.9999999999999,
         175.0,
         anchor="nw",
-        text="6",
+        text=currntu,
         fill="#505485",
         font=("Poppins Bold", 32 * -1)
     )
@@ -246,7 +309,7 @@ def mainscreen(csvlist):
         779.9999999999999,
         225.0,
         anchor="nw",
-        text="7",
+        text=currppm,
         fill="#505485",
         font=("Poppins Bold", 32 * -1)
     )
@@ -255,7 +318,7 @@ def mainscreen(csvlist):
         779.9999999999999,
         275.0,
         anchor="nw",
-        text="8",
+        text=currdegc,
         fill="#505485",
         font=("Poppins Bold", 32 * -1)
     )
@@ -290,7 +353,7 @@ def mainscreen(csvlist):
         39.999999999999886,
         372.0,
         anchor="nw",
-        text="Water: a way of life",
+        text="Water: A Way of Life",
         fill="#FCFCFC",
         font=("RobotoRoman Regular", 24 * -1)
     )
@@ -340,7 +403,6 @@ while 1:
     while True:
         data = arduino.readline()[:-2]
         if data:
-            #print(str(data)[2:-1])
             break
     strcsv = str(data)[2:-1]
     datacsv = list(map(float,strcsv.split(',')))
@@ -367,6 +429,7 @@ while 1:
     #print(listcsv)
     mainscreen(listcsv)
 
+    #wait for next hour before taking next reading
     while 1:
         hourcurr = today.strftime("%H") #use %H for hour, %M for min
         if hourcurr > hourprev:
