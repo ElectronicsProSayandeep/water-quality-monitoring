@@ -1,11 +1,6 @@
-<<<<<<< Updated upstream
-
 import matplotlib
 import matplotlib.pyplot as plt 
 from matplotlib.pyplot import figure
-=======
-import matplotlib.pyplot as plt
->>>>>>> Stashed changes
 
 
 listcsv = [[0,7.25,212,700,20],
@@ -37,27 +32,22 @@ listcsv = [[0,7.25,212,700,20],
 hours = []
 for i in listcsv:
     hours.append(i[0])
-print(hours)
 
 ph = []
 for i in listcsv:
     ph.append(i[1])
-print(ph)
 
 tds = []
 for i in listcsv:
     tds.append(i[2])
-print(tds)
 
 turbidity = []
 for i in listcsv:
     turbidity.append(i[3])
-print(turbidity)
 
 temperature = []
 for i in listcsv:
     temperature.append(i[4])
-print(temperature)
 
 def phgraph():
 
@@ -84,7 +74,4 @@ def temperaturegraph():
     plt.xticks(hours)
     plt.plot(hours,temperature)
     plt.show()
-
     
-    
-

@@ -1,6 +1,6 @@
 #include <EEPROM.h>
 #include <OneWire.h>
-#include <GravityTDS.h>
+#include "GravityTDS.h"
 #include <DallasTemperature.h>
 
 GravityTDS gravityTds;
@@ -17,9 +17,9 @@ unsigned long int avgval;
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   sensors.begin();
-  gravityTds.setPin(A3);
+  gravityTds.setPin(A1);
   gravityTds.setAref(5.0);
   gravityTds.setAdcRange(1024);
   gravityTds.begin();
