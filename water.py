@@ -115,7 +115,7 @@ class Window1:
                 
                         
             #===================================================buttons====================================================================================================================
-            self.btnp1 = Button(self.BottomFrame1,text = 'pH', width = 15,font=(fonth,20,'italic'), command = self.new_window , fg=obg,bg=textc)
+            self.btnp1 = Button(self.BottomFrame1,text = 'pH', width = 15,font=(fonth,20,'italic'), fg=obg,bg=textc)
             self.btnp1.grid(row=8,column=0)
 
             self.btnp2 = Button(self.BottomFrame1,text = 'Turbidity', width = 15,font=(fonth,20,'italic'), fg=obg,bg=textc)                                                           
@@ -151,22 +151,6 @@ class Window1:
             self.lblp4=Label(self.ChartFrame,font=(fonth,20,'italic'),text=self.pv4,bd=22, bg=ibg, fg=obg, borderwidth=10)                                                                               
             self.lblp4.grid(row=5,column=1)
 
-        #===========================defining===========================================================================================================
-        def new_window(self):
-            self.newWindow = Toplevel(self.master)
-            self.app = Window2(self.newWindow)
-                 
-
-class Window2:
-        def __init__(self,master):
-            self.master=master
-            self.master.title("HEHEHAHAHHAA")
-            self.master.geometry('1350x750+0+0')
-            self.master.config(bg =obg)
-
-            self.frame = Frame(self.master, bg=obg)
-            self.frame.pack()            
-            
 #================================================================================================================================================================================================    
            
 
