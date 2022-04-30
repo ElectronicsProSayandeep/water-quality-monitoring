@@ -4,12 +4,12 @@ from datetime import date
 import os
 import csv
 import time
+import shutil
 
 prodir = "C:\\Users\\Sayandeep\\Software_Development\\python\\water_ml\\water-quality-system\\app"
 
-watchtime = True
 today = date.today()
-hourprev = today.strftime("%H")
+hourprev = today.strftime("%M") #use %H for hour, %M for min
 
 def mainscreen(ph, turb, tds, temp):
     mainscrn = Tk()
@@ -22,6 +22,7 @@ def mainscreen(ph, turb, tds, temp):
     mainscrn.mainloop()
 
 while 1:
+    #create directory for current month (if req.)
     today = date.today()
     d1 = today.strftime("%Y")
     d2 = today.strftime("%B")
@@ -34,17 +35,36 @@ while 1:
     except:
         pass
 
-    #read arduino csv
+    #read arduino readings
     ph = 0
-    turb = 0
     tds = 0
+    turb = 0
     temp = 0
 
+    #create csv (if req.)
+    daydate = today.strftime("%d")
+    try:
+        shutil.copyfile("C:\\Users\\Sayandeep\\Software_Development\\python\\water_ml\\water-quality-system\\app\\data\\blank.csv",mpath + "\\{}".format(str(daydate) + ".csv"))
+    except:
+        pass
 
-    mainscreen(ph, turb, tds, temp)
-    while watchtime:
-        hourcurr = today.strftime("%H")
+    #add new values to csv
+    headcsv = ['hour','ph','tds','turb','temp']
+    datacsv = [hourcurr,ph,tds,turb,temp]
+    with open(daydate + ".csv", 'w', encoding='UTF8') as csvfile:
+        writecsv = csv.writer(csvfile)
+        writecsv.writerow(headcsv)
+        writecsv.writerow(datacsv)
+
+    #read last 24 values and store in list
+
+
+    #mainscreen(currval) #display values on gui
+    while 1:
+        hourcurr = today.strftime("%M") #use %H for hour, %M for min
         if hourcurr > hourprev:
+            hourprev = hourcurr
+            print("updating...")
             break
         else:
             time.sleep(30)
