@@ -1,3 +1,9 @@
+
+import matplotlib
+import matplotlib.pyplot as plt 
+from matplotlib.pyplot import figure
+
+
 listcsv = [[0,7.25,212,700,20],
 [1,7.69,212,800,22],
 [2,7.04,204,900,24],
@@ -27,3 +33,54 @@ listcsv = [[0,7.25,212,700,20],
 hours = []
 for i in listcsv:
     hours.append(i[0])
+print(hours)
+
+ph = []
+for i in listcsv:
+    ph.append(i[1])
+print(ph)
+
+tds = []
+for i in listcsv:
+    tds.append(i[2])
+print(tds)
+
+turbidity = []
+for i in listcsv:
+    turbidity.append(i[3])
+print(turbidity)
+
+temperature = []
+for i in listcsv:
+    temperature.append(i[4])
+print(temperature)
+
+def phgraph():
+
+    figure(figsize=(13,6))
+    plt.xticks(hours)
+    plt.plot(hours,ph)
+    plt.show()
+
+def tdsgraph():
+    figure(figsize=(13,6))
+    plt.xticks(hours)
+    plt.plot(hours,tds)
+    plt.show()
+
+def turbiditygraph():
+    figure(figsize=(13,6))
+    plt.xticks(hours)
+    plt.plot(hours,turbidity)
+    plt.show()
+
+
+def temperaturegraph():
+    figure(figsize=(13,6))
+    plt.xticks(hours)
+    plt.plot(hours,temperature)
+    plt.show()
+
+    
+    
+
