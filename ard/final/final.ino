@@ -19,7 +19,7 @@ void setup()
 {
   Serial.begin(9600);
   sensors.begin();
-  gravityTds.setPin(A1);
+  gravityTds.setPin(A3);
   gravityTds.setAref(5.0);
   gravityTds.setAdcRange(1024);
   gravityTds.begin();
@@ -55,7 +55,7 @@ void loop(){
   float ph = -5.70 * volt + calibration_value;
 
   //tds ppm
-  gravityTds.setTemperature(degc);  // set the temperature and execute temperature compensation
+  gravityTds.setTemperature(27);  // set the temperature and execute temperature compensation
   gravityTds.update();  //sample and calculate
   ppm = gravityTds.getTdsValue();  // then get the value
 
@@ -79,7 +79,7 @@ void loop(){
   Serial.print(',');
   Serial.print(ph,2);
   Serial.print(',');
-  Serial.print(ppm,2);
+  Serial.print(ppm,0);
   Serial.print(',');
   Serial.println(ntu,0);
   delay(1000);
